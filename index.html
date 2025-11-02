@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <title>Paradigm Playground - Interactive Visualizations</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background: linear-gradient(135deg, #f0f4f9 0%, #e0e7ff 100%);
+  background-size: 400% 400%;
+  color: #1e293b;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px 80px;
+  scroll-behavior: smooth;
+  animation: fadeInBody 1s ease-out, gradientShift 10s ease-in-out infinite;
+}
+
+@keyframes fadeInBody {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  user-select: none;
+  transform: scale(1);
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:hover::before {
+  left: 100%;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:focus-visible {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Hero Section */
+header {
+  max-width: 720px;
+  margin-bottom: 60px;
+  text-align: center;
+  user-select: none;
+  animation: slideInHeader 1s ease-out, bounceIn 0.8s ease-out 1s both;
+}
+
+@keyframes slideInHeader {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+header .tagline {
+  display: inline-block;
+  background: #e0e7ff;
+  color: #3730a3;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 24px;
+  margin-bottom: 14px;
+  animation: fadeInTagline 1.2s ease-out 0.3s both, pulse 2s infinite 1.5s;
+}
+
+@keyframes fadeInTagline {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(224, 231, 255, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(224, 231, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(224, 231, 255, 0); }
+}
+
+header h1 {
+  font-weight: 700;
+  font-size: 2.85rem;
+  line-height: 1.15;
+  margin: 0 0 14px 0;
+  color: #1e293b;
+  animation: fadeInH1 1.2s ease-out 0.5s both, wiggle 1s ease-in-out 1.7s both;
+}
+
+@keyframes fadeInH1 {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wiggle {
+  0%, 7% { transform: rotateZ(0); }
+  15% { transform: rotateZ(-15deg); }
+  20% { transform: rotateZ(10deg); }
+  25% { transform: rotateZ(-10deg); }
+  30% { transform: rotateZ(6deg); }
+  35% { transform: rotateZ(-4deg); }
+  40%, 100% { transform: rotateZ(0); }
+}
+
+header p {
+  font-weight: 400;
+  font-size: 1.15rem;
+  color: #475569;
+  max-width: 480px;
+  margin: 0 auto 30px auto;
+  line-height: 1.5;
+  animation: fadeInP 1.2s ease-out 0.7s both, typewriter 3s steps(40, end) 2s both;
+}
+
+@keyframes fadeInP {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+header .btn-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  user-select: none;
+  animation: fadeInBtnGroup 1.2s ease-out 0.9s both, slideUp 0.5s ease-out 2.1s both;
+}
+
+@keyframes fadeInBtnGroup {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); }
+  to { transform: translateY(0); }
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+  padding: 14px 26px;
+  font-weight: 700;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(59,130,246,0.4);
+  border: none;
+  user-select: none;
+  transition: all 0.3s ease;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 4px 10px rgba(59,130,246,0.4); }
+  to { box-shadow: 0 4px 20px rgba(59,130,246,0.8); }
+}
+
+.btn-primary:hover {
+  background-color: #2563eb;
+  box-shadow: 0 6px 15px rgba(59,130,246,0.6);
+}
+
+.btn-secondary {
+  background-color: white;
+  border: 2px solid #94a3b8;
+  color: #475569;
+  padding: 14px 26px;
+  font-weight: 700;
+  border-radius: 8px;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #f1f5f9;
+  border-color: #64748b;
+}
+
+/* Paradigm Grid Section */
+section#paradigm-selection {
+  max-width: 960px;
+  width: 100%;
+  margin-bottom: 100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
+  gap: 30px;
+  user-select: none;
+  animation: fadeInSection 1s ease-out 1.1s both, float 3s ease-in-out infinite;
+}
+
+@keyframes fadeInSection {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.paradigm-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.07);
+  padding: 26px 28px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  user-select: none;
+  transition: all 0.4s ease;
+  animation: fadeInCard 0.8s ease-out both, rotateIn 0.6s ease-out both;
+}
+
+.paradigm-card:nth-child(1) { animation-delay: 1.3s, 1.3s; }
+.paradigm-card:nth-child(2) { animation-delay: 1.5s, 1.5s; }
+.paradigm-card:nth-child(3) { animation-delay: 1.7s, 1.7s; }
+.paradigm-card:nth-child(4) { animation-delay: 1.9s, 1.9s; }
+.paradigm-card:nth-child(5) { animation-delay: 2.1s, 2.1s; }
+
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes rotateIn {
+  from { transform: rotateY(-90deg); opacity: 0; }
+  to { transform: rotateY(0deg); opacity: 1; }
+}
+
+.paradigm-card:hover {
+  box-shadow: 0 24px 40px rgb(0 0 0 / 0.14);
+  transform: translateY(-5px) rotate(1deg);
+  cursor: default;
+}
+
+.paradigm-card > h3 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #1e293b;
+  user-select: text;
+}
+
+.paradigm-subtitle {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.3;
+  flex-grow: 0;
+  user-select: text;
+}
+
+.paradigm-example {
+  font-size: 0.88rem;
+  background: #f1f5f9;
+  color: #334155;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-family: 'Source Code Pro', monospace;
+  user-select: text;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow-x: auto;
+  transition: all 0.3s ease;
+  animation: slideInExample 0.5s ease-out both;
+}
+
+.paradigm-example:nth-child(1) { animation-delay: 1.5s; }
+.paradigm-example:nth-child(2) { animation-delay: 1.7s; }
+.paradigm-example:nth-child(3) { animation-delay: 1.9s; }
+.paradigm-example:nth-child(4) { animation-delay: 2.1s; }
+.paradigm-example:nth-child(5) { animation-delay: 2.3s; }
+
+@keyframes slideInExample {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.paradigm-example:hover {
+  background-color: #e2e8f0;
+  transform: scale(1.02);
+}
+
+.visualize-btn {
+  margin-top: auto;
+  padding: 12px 18px;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(59,130,246,0.35);
+  transition: all 0.3s ease;
+  user-select: none;
+  animation: bounceInBtn 0.5s ease-out both;
+}
+
+.visualize-btn:nth-child(1) { animation-delay: 1.7s; }
+.visualize-btn:nth-child(2) { animation-delay: 1.9s; }
+.visualize-btn:nth-child(3) { animation-delay: 2.1s; }
+.visualize-btn:nth-child(4) { animation-delay: 2.3s; }
+.visualize-btn:nth-child(5) { animation-delay: 2.5s; }
+
+@keyframes bounceInBtn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.visualize-btn:hover {
+  background-color: #2563eb;
+  box-shadow: 0 6px 18px rgba(59,130,246,0.5);
+  transform: translateY(-2px) rotate(2deg);
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(30, 41, 59, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  user-select: none;
+  animation: fadeInOverlay 0.3s ease-out, zoomIn 0.5s ease-out;
+}
+
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.5); }
+  to { transform: scale(1); }
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.25);
+  width: 90vw;
+  max-width: 800px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  user-select: none;
+  animation: scaleInModal 0.4s ease-out, slideInFromBottom 0.5s ease-out;
+}
+
+@keyframes scaleInModal {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from { transform: translateY(100px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  padding: 18px 28px;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: slideInHeaderModal 0.4s ease-out;
+}
+
+@keyframes slideInHeaderModal {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1.6rem;
+  line-height: 1;
+  padding: 0;
+  font-weight: 900;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  color: #dbeafe;
+  transform: rotate(90deg) scale(1.1);
+}
+
+.modal-body {
+  flex-grow: 1;
+  background: #f9fafb;
+  padding: 24px 28px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+  animation: fadeInBodyModal 0.5s ease-out 0.2s both;
+}
+
+@keyframes fadeInBodyModal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+canvas#visualization-canvas {
+  background: white;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 6px 20px rgb(59 130 246 / 0.15);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 720px;
+  height: 360px;
+  margin-bottom: 20px;
+  user-select: none;
+  animation: fadeInCanvas 0.5s ease-out 0.2s both, pulseCanvas 2s infinite;
+}
+
+@keyframes fadeInCanvas {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseCanvas {
+  0% { box-shadow: 0 6px 20px rgb(59 130 246 / 0.15); }
+  50% { box-shadow: 0 6px 30px rgb(59 130 246 / 0.3); }
+  100% { box-shadow: 0 6px 20px rgb(59 130 246 / 0.15); }
+}
+
+/* Controls in modal */
+.controls {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 720px;
+  user-select: none;
+  animation: fadeInControls 0.5s ease-out 0.4s both, staggerIn 0.3s ease-out both;
+}
+
+  </style>
+</head>
+<body>
+
+  <header role="banner" aria-label="Paradigm Playground Hero">
+    <h1>Paradigm Playground</h1>
+    <p>Master algorithmic paradigms through interactive visualizations.</p>
+    <div class="btn-group" role="group" aria-label="Hero call to actions">
+      <button class="btn-primary" id="explore-btn" type="button">Explore Paradigms &rarr;</button>
+    </div>
+  </header>
+
+  <section id="paradigm-selection" aria-label="Choose your algorithmic paradigm">
+    <!-- Divide & Conquer -->
+    <article class="paradigm-card" data-paradigm="divide" tabindex="0">
+      <h3>Divide &amp; Conquer</h3>
+      <p class="paradigm-subtitle">Break problems into smaller subproblems, solve recursively, and combine results.</p>
+      <p><strong>Example:</strong></p>
+      <div class="paradigm-example" aria-label="Example: Merge Sort">Merge Sort</div>
+      <button class="visualize-btn" type="button" aria-haspopup="dialog" aria-controls="modal">Visualize</button>
+    </article>
+
+    <!-- Greedy -->
+    <article class="paradigm-card" data-paradigm="greedy" tabindex="0">
+      <h3>Greedy</h3>
+      <p class="paradigm-subtitle">Make locally optimal choices at each step, hoping to find a global optimum.</p>
+      <p><strong>Example:</strong></p>
+      <div class="paradigm-example" aria-label="Example: Coin Change">Coin Change</div>
+      <button class="visualize-btn" type="button" aria-haspopup="dialog" aria-controls="modal">Visualize</button>
+    </article>
+
+    <!-- Backtracking -->
+    <article class="paradigm-card" data-paradigm="backtracking" tabindex="0">
+      <h3>Backtracking</h3>
+      <p class="paradigm-subtitle">Build solutions incrementally and abandon paths that fail to satisfy constraints.</p>
+      <p><strong>Example:</strong></p>
+      <div class="paradigm-example" aria-label="Example: N-Queens">N-Queens</div>
+      <button class="visualize-btn" type="button" aria-haspopup="dialog" aria-controls="modal">Visualize</button>
+    </article>
+
+    <!-- Branch & Bound -->
+    <article class="paradigm-card" data-paradigm="branch" tabindex="0">
+      <h3>Branch &amp; Bound</h3>
+      <p class="paradigm-subtitle">Systematically explore solution space while pruning branches that can't improve best solution.</p>
+      <p><strong>Example:</strong></p>
+      <div class="paradigm-example" aria-label="Example: TSP Pruning">TSP Pruning</div>
+      <button class="visualize-btn" type="button" aria-haspopup="dialog" aria-controls="modal">Visualize</button>
+    </article>
+
+    <!-- Dynamic Programming -->
+    <article class="paradigm-card" data-paradigm="dp" tabindex="0">
+      <h3>Dynamic Programming</h3>
+      <p class="paradigm-subtitle">Optimize by storing solutions to overlapping subproblems, avoiding redundant computations.</p>
+      <p><strong>Example:</strong></p>
+      <div class="paradigm-example" aria-label="Example: Fibonacci Sequence">Fibonacci Sequence</div>
+      <button class="visualize-btn" type="button" aria-haspopup="dialog" aria-controls="modal">Visualize</button>
+    </article>
+  </section>
+
+  <!-- Modal for visualizations -->
+  <div id="modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+    <div class="modal" role="document">
+      <header class="modal-header">
+        <span id="modal-title">Paradigm Visualization</span>
+        <button id="modal-close" aria-label="Close visualization modal" type="button">&times;</button>
+      </header>
+      <main class="modal-body">
+        <canvas id="visualization-canvas" width="720" height="360" aria-live="polite" aria-atomic="true" aria-describedby="status-text"></canvas>
+        <div class="controls" role="group" aria-label="Visualization control buttons">
+          <button id="reset-btn" type="button">Reset</button>
+          <button id="prev-btn" type="button">Previous</button>
+          <button id="next-btn" type="button">Next</button>
+          <button id="play-btn" type="button">Autoplay</button>
+        </div>
+        <div id="status-text" aria-live="polite" style="margin-top:12px; font-weight:600; color:#475569; font-size:1rem; text-align:center;"></div>
+      </main>
+    </div>
+  </div>
+  <div style="height: 20px;"></div>
+  <hr style="border: none; height: 2px; background-color: black; width: 80%; margin: 20px auto;">
+
+  <footer>
+    <p>This webpage is made by : Lakshit</p>
+    <p>Roll Number : 2024UCD2173</p>
+    <p>Branch : CSDS</p>
+  </footer>
+
+
+  <!-- <script src="script.js"></script> -->
+
+  <script>
+    (() => {
+      // Elements
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalClose = document.getElementById('modal-close');
+      const visualizationCanvas = document.getElementById('visualization-canvas');
+      const ctx = visualizationCanvas.getContext('2d');
+      const statusText = document.getElementById('status-text');
+      const resetBtn = document.getElementById('reset-btn');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const playBtn = document.getElementById('play-btn');
+      const paradigmCards = document.querySelectorAll('.paradigm-card');
+
+      // Variables to track steps, autoplay, etc
+      let currentParadigm = null;
+      let steps = [];
+      let currentStep = 0;
+      let autoplayInterval = null;
+
+      // Helper to clear canvas
+      function clearCanvas() {
+        ctx.clearRect(0, 0, visualizationCanvas.width, visualizationCanvas.height);
+      }
+
+      // Disable controls helper
+      function setControlsDisabled(state) {
+        resetBtn.disabled = state;
+        prevBtn.disabled = state;
+        nextBtn.disabled = state;
+        playBtn.disabled = state;
+      }
+
+      // 1. Merge Sort (Divide & Conquer)
+      function mergeSortVisualization() {
+        const array = [8, 3, 5, 4, 7, 6, 1, 2];
+        const barWidth = 50;
+        const padding = 14;
+        let stepsArr = [];
+
+        // Deep clone helper
+        function cloneArr(arr) { return arr.slice(); }
+
+        // Generate steps with recursive merges
+        function mergeSort(arr, left=0, right=arr.length-1) {
+          if(left >= right) return;
+          const mid = Math.floor((left+right)/2);
+          mergeSort(arr, left, mid);
+          mergeSort(arr, mid+1, right);
+          stepsArr.push({arr: cloneArr(arr), left, right, mid, merging:false});
+
+          let temp = [];
+          let i = left, j = mid+1;
+          while(i<=mid && j<=right){
+            if(arr[i] <= arr[j]) temp.push(arr[i++]);
+            else temp.push(arr[j++]);
+          }
+          while(i<=mid) temp.push(arr[i++]);
+          while(j<=right) temp.push(arr[j++]);
+
+          stepsArr.push({arr: cloneArr(arr), left, right, mid, merging:true});
+
+          for(let k=0; k<temp.length; k++){
+            arr[left+k] = temp[k];
+            stepsArr.push({arr: cloneArr(arr), left, right, mid, merging:true});
+          }
+        }
+        mergeSort(array.slice());
+
+        function draw(step) {
+          clearCanvas();
+          ctx.font = '20px Inter';
+          const w = visualizationCanvas.width;
+          const h = visualizationCanvas.height;
+          ctx.fillStyle = '#334155';
+          const label = step.merging
+            ? `Merging [${step.left}..${step.mid}] & [${step.mid+1}..${step.right}]`
+            : `Dividing Subarray [${step.left}..${step.right}]`;
+          ctx.fillText(label, 24, 36);
+
+          for(let i = 0; i<step.arr.length; i++){
+            let val = step.arr[i];
+            let x = padding + i*(barWidth+padding);
+            let barHeight = val* 15;
+            let isHighlight = i>=step.left && i <= step.right;
+
+            ctx.fillStyle = isHighlight ? '#3b82f6' : '#94a3b8';
+            ctx.shadowColor = isHighlight ? 'rgba(59,130,246,0.7)' : 'transparent';
+            ctx.shadowBlur = isHighlight ? 8 : 0;
+            ctx.fillRect(x, h - barHeight - 50, barWidth, barHeight);
+
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = 'white';
+            ctx.fillText(val, x + barWidth/3, h - 22);
+          }
+        }
+        return {title: 'Divide & Conquer: Merge Sort', steps: stepsArr, draw};
+      }
+
+      // 2. Greedy (Coin Change) — Units removed per your request
+      function greedyVisualization() {
+        const coins = [25, 10, 5, 1];
+        const amount = 93;
+        const stepsArr = [];
+
+        let rem = amount;
+        for (let c of coins) {
+          let count = Math.floor(rem / c);
+          rem = rem % c;
+          stepsArr.push({ coin: c, count, rem });
+        }
+
+        function draw(step) {
+          clearCanvas();
+          const w = visualizationCanvas.width;
+          const h = visualizationCanvas.height;
+          ctx.font = '20px Inter';
+          ctx.fillStyle = '#334155';
+          ctx.fillText('Coin Change (Greedy)', 24, 36);
+          ctx.font = '16px Inter';
+          // Units removed here - only numbers shown
+          ctx.fillText(`Total amount: ${amount}`, 24, 70);
+          ctx.fillText(`Using coin: ${step.coin}`, 24, 100);
+          ctx.fillText(`Remaining: ${step.rem}`, 24, h - 50);
+
+          // Draw coins as gold circles
+          const cx = 40;
+          const cy = h / 2 + 20;
+          const rad = 18;
+
+          for (let i = 0; i < step.count; i++) {
+            const x = cx + i * (rad * 2.9);
+            ctx.beginPath();
+            ctx.fillStyle = '#facc15';
+            ctx.shadowColor = "#b45309";
+            ctx.shadowBlur = 6;
+            ctx.arc(x, cy, rad, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#92400e';
+            ctx.stroke();
+
+            ctx.fillStyle = '#78350f';
+            ctx.font = 'bold 16px Inter';
+            ctx.fillText(step.coin, x - 12, cy + 7);
+          }
+        }
+
+        return { title: 'Greedy: Coin Change', steps: stepsArr, draw };
+      }
+
+      // 3. Backtracking (N Queens)
+      function backtrackingVisualization() {
+        const n = 4;
+        let stepsArr = [];
+
+        function cloneBoard(board) {
+          return board.map(r => r.slice());
+        }
+
+        function isSafe(board, r, c) {
+          for (let i = 0; i < r; i++) if (board[i][c]) return false;
+          for (let i = r - 1, j = c - 1; i >= 0 && j >= 0; i--, j--) if (board[i][j]) return false;
+          for (let i = r - 1, j = c + 1; i >= 0 && j < n; i--, j++) if (board[i][j]) return false;
+          return true;
+        }
+
+        function solve(board = null, row = 0) {
+          if (!board) board = Array.from({ length: n }, () => Array(n).fill(false));
+          if (row === n) {
+            stepsArr.push(cloneBoard(board));
+            return true;
+          }
+          let found = false;
+          for (let col = 0; col < n; col++) {
+            if (isSafe(board, row, col)) {
+              board[row][col] = true;
+              stepsArr.push(cloneBoard(board));
+              if (solve(board, row + 1)) found = true;
+              board[row][col] = false;
+              stepsArr.push(cloneBoard(board));
+            }
+          }
+          return found;
+        }
+        solve();
+
+        function draw(board) {
+          clearCanvas();
+          const w = visualizationCanvas.width;
+          const h = visualizationCanvas.height;
+          const cellSize = Math.min(w, h) / n;
+
+          // Draw chessboard squares
+          for (let r = 0; r < n; r++) {
+            for (let c = 0; c < n; c++) {
+              ctx.fillStyle = (r + c) % 2 === 0 ? '#e4e6eb' : '#a1a5b8';
+              ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
+            }
+          }
+
+          // Draw queens as red circles
+          ctx.fillStyle = '#ef4444';
+          for (let r = 0; r < n; r++) {
+            for (let c = 0; c < n; c++) {
+              if (board[r][c]) {
+                ctx.beginPath();
+                ctx.arc(c * cellSize + cellSize / 2, r * cellSize + cellSize / 2, cellSize / 3, 0, 2 * Math.PI);
+                ctx.fill();
+              }
+            }
+          }
+          ctx.fillStyle = '#334155';
+          ctx.font = '18px Inter';
+          ctx.fillText(`N-Queens Step`, 24, h - 40);
+        }
+
+        return { title: 'Backtracking: N-Queens', steps: stepsArr, draw };
+      }
+
+      // 4. Branch & Bound (TSP Pruning)
+      function branchVisualization() {
+        const nodes = [
+          { x: 80, y: 90, label: 'A' },
+          { x: 350, y: 60, label: 'B' },
+          { x: 350, y: 190, label: 'C' },
+          { x: 110, y: 185, label: 'D' },
+        ];
+        const stepsArr = [
+          { path: ['A'], pruned: [] },
+          { path: ['A', 'D'], pruned: [] },
+          { path: ['A', 'D', 'B'], pruned: ['C'] },
+          { path: ['A', 'D', 'C'], pruned: ['B'] },
+          { path: ['A', 'D', 'B', 'C'], pruned: [] }
+        ];
+
+        function draw(step) {
+          clearCanvas();
+          const w = visualizationCanvas.width;
+          const h = visualizationCanvas.height;
+
+          // Draw edges on path
+          ctx.beginPath();
+          ctx.strokeStyle = '#3b82f6';
+          ctx.lineWidth = 4;
+          for (let i = 0; i < step.path.length; i++) {
+            let node = nodes.find(n => n.label === step.path[i]);
+            if (i === 0) ctx.moveTo(node.x, node.y);
+            else ctx.lineTo(node.x, node.y);
+          }
+          ctx.stroke();
+
+          // Draw all nodes
+          nodes.forEach(node => {
+            let isPruned = step.pruned.includes(node.label);
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 22, 0, 2 * Math.PI);
+            ctx.fillStyle = isPruned ? 'rgba(147,197,253,0.4)' : '#2563eb';
+            ctx.fill();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = isPruned ? 'rgba(49,130,206,0.3)' : '#1e40af';
+            ctx.stroke();
+
+            ctx.fillStyle = isPruned ? 'rgba(30,64,175,0.3)' : '#e0e7ff';
+            ctx.font = 'bold 20px Inter';
+            ctx.fillText(node.label, node.x - 7, node.y + 8);
+          });
+
+          // Info text
+          ctx.fillStyle = '#334155';
+          ctx.font = '16px Inter';
+          ctx.fillText(`Path: ${step.path.join(' → ')}`, 24, h - 45);
+          ctx.fillText(`Pruned: ${step.pruned.length ? step.pruned.join(', ') : 'None'}`, 24, h - 20);
+        }
+
+        return { title: 'Branch & Bound: TSP Pruning', steps: stepsArr, draw };
+      }
+
+      // 5. Dynamic Programming (Fibonacci)
+      function dpVisualization() {
+        const n = 12;
+        let dp = Array(n + 1).fill(0);
+        dp[1] = 1;
+        let stepsArr = [];
+
+        // start with dp table growing
+        for (let i = 0; i <= n; i++) {
+          stepsArr.push(dp.slice(0, i + 1));
+          if (i >= 2) dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        stepsArr.push(dp.slice());
+
+        function draw(arr) {
+          clearCanvas();
+          const w = visualizationCanvas.width;
+          const h = visualizationCanvas.height;
+
+          ctx.fillStyle = '#334155';
+          ctx.font = '20px Inter';
+          ctx.fillText('DP Fibonacci Table', 24, 40);
+
+          const boxSize = 48;
+          const gap = 10;
+          const startX = 24;
+          const startY = 80;
+
+          for (let i = 0; i < arr.length; i++) {
+            const x = startX + i * (boxSize + gap);
+            const y = startY;
+            // Highlight last cell in array
+            if (i === arr.length - 1) {
+              ctx.fillStyle = '#bfdbfe';
+              ctx.fillRect(x - 6, y - 12, boxSize + 12, boxSize + 24);
+            }
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, boxSize, boxSize);
+
+            ctx.fillStyle = '#1e293b';
+            ctx.font = 'bold 24px Inter';
+            ctx.fillText(arr[i], x + boxSize / 3.3, y + boxSize * 0.7);
+
+            ctx.font = '14px Inter';
+            ctx.fillStyle = '#64748b';
+            ctx.fillText(i, x + boxSize / 2.7, y + boxSize + 19);
+          }
+        }
+        return { title: 'Dynamic Programming: Fibonacci Sequence', steps: stepsArr, draw };
+      }
+
+      // Map paradigm to visualization function
+      const paradigmVisuals = {
+        'divide': mergeSortVisualization,
+        'greedy': greedyVisualization,
+        'backtracking': backtrackingVisualization,
+        'branch': branchVisualization,
+        'dp': dpVisualization
+      };
+
+      // State
+      function resetState() {
+        clearInterval(autoplayInterval);
+        autoplayInterval = null;
+        playBtn.textContent = 'Autoplay';
+      }
+
+      // Draw current step of current paradigm
+      function renderStep() {
+        const stepData = currentParadigm.steps[currentStep];
+        currentParadigm.draw(stepData);
+        statusText.textContent = `Step ${currentStep + 1} of ${currentParadigm.steps.length}`;
+        prevBtn.disabled = currentStep === 0;
+        nextBtn.disabled = currentStep === currentParadigm.steps.length - 1;
+        resetBtn.disabled = currentStep === 0;
+      }
+
+      // Button listeners
+      resetBtn.addEventListener('click', () => {
+        currentStep = 0;
+        renderStep();
+        resetState();
+      });
+      prevBtn.addEventListener('click', () => {
+        if (currentStep > 0) {
+          currentStep--;
+          renderStep();
+          resetState();
+        }
+      });
+      nextBtn.addEventListener('click', () => {
+        if (currentStep < currentParadigm.steps.length - 1) {
+          currentStep++;
+          renderStep();
+          resetState();
+        }
+      });
+      playBtn.addEventListener('click', () => {
+        if (autoplayInterval) {
+          // Stop autoplay
+          clearInterval(autoplayInterval);
+          autoplayInterval = null;
+          playBtn.textContent = 'Autoplay';
+        } else {
+          // Start autoplay
+          playBtn.textContent = 'Pause';
+          autoplayInterval = setInterval(() => {
+            if (currentStep >= currentParadigm.steps.length - 1) {
+              currentStep = 0;
+            } else {
+              currentStep++;
+            }
+            renderStep();
+          }, 1500);
+        }
+      });
+
+      // Close modal
+      modalClose.addEventListener('click', () => {
+        modal.classList.remove('active');
+        resetState();
+        // Return focus to original button
+        if (lastFocusButton) lastFocusButton.focus();
+      });
+
+      // Close on Escape key
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          modal.classList.remove('active');
+          resetState();
+          if (lastFocusButton) lastFocusButton.focus();
+        }
+      });
+
+      // Open modal from cards
+      let lastFocusButton = null;
+      paradigmCards.forEach(card => {
+        const btn = card.querySelector('button.visualize-btn');
+        btn.addEventListener('click', () => {
+          const paradigmKey = card.dataset.paradigm;
+          if (!(paradigmKey in paradigmVisuals)) return;
+          currentParadigm = paradigmVisuals[paradigmKey]();
+
+          modalTitle.textContent = currentParadigm.title;
+          modal.classList.add('active');
+          currentStep = 0;
+          renderStep();
+          resetState();
+          lastFocusButton = btn;
+          // Focus first control on modal
+          resetBtn.focus();
+        });
+      });
+
+      // Smooth focus trap inside modal
+      modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+          const focusable = Array.from(modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter(el => !el.disabled && el.offsetParent !== null);
+          if (focusable.length === 0) return;
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (e.shiftKey) {
+            if (document.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            }
+          } else {
+            if (document.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        }
+      });
+
+      // Hero "Explore Paradigms" scroll to grid
+      document.getElementById('explore-btn').addEventListener('click', e => {
+        document.getElementById('paradigm-selection').scrollIntoView({ behavior: 'smooth' });
+      });
+    })();
+
+  </script>
+</body>
+</html>
